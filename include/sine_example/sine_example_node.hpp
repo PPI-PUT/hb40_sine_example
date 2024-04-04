@@ -34,6 +34,18 @@ public:
 
 private:
   int time_{0};
+  // kp 
+  float kp_j0_{30.0f};
+  float kp_j1_{30.0f};
+  float kp_j2_{30.0f};
+  float kp_spine_{30.0f};
+  // kd
+  float kd_j0_{5.0f};
+  float kd_j1_{5.0f};
+  float kd_j2_{5.0f};
+  float kd_spine_{5.0f};
+  double period_{0.5};
+  double amplitude_{0.1};
   std::chrono::_V2::steady_clock::time_point steady_clock_;
   SineExamplePtr sine_example_{nullptr};
   JointCommand cmd_;
@@ -43,6 +55,9 @@ private:
   rclcpp::Subscription<BridgeData>::SharedPtr sub_;
   void controlLoop();
   void jointStateCallback(const BridgeData::SharedPtr msg);
+  OnSetParametersCallbackHandle::SharedPtr set_param_res_;
+  rcl_interfaces::msg::SetParametersResult onSetParam(
+    const std::vector<rclcpp::Parameter> & params);
 };
 }  // namespace sine_example
 
